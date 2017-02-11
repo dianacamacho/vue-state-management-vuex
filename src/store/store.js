@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
         return state.counter + ' clicks';
       }
     },
+    // Mutations must be synchronus! Can't have async code inside, because else can't track which mutation was responsible for each change in the mutation
     mutations: {
       increment: state => {
         state.counter++;
@@ -24,3 +25,4 @@ export const store = new Vuex.Store({
       }
     }
 });
+
