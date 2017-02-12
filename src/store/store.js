@@ -17,11 +17,29 @@ export const store = new Vuex.Store({
     },
     // Mutations must be synchronus! Can't have async code inside, because else can't track which mutation was responsible for each change in the mutation
     mutations: {
-      increment: state => {
-        state.counter++;
+      increment: (state, payload) => {
+        state.counter += payload;
       },
-      decrement: state => {
-        state.counter--;
+      decrement: (state, payload) => {
+        state.counter -= payload;
+      }
+    },
+    actions: {
+      increment: (context, payload) => {
+        context.commit('increment', payload.by);
+      },
+      decrement: (context, payload) => {
+        context.commit('decrement', payload.by);
+      },
+      asyncIncrement: (context, payload) => {
+        setTimeout(() => {
+          context.commit('increment', payload.by);
+        }, payload.duration);
+      },
+      asyncDecrement: (context, payload) => {
+        setTimeout(() => {
+          context.commit('decrement', payload.by);
+        }, payload.duration);
       }
     }
 });
