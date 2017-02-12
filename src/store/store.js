@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        counter: 0
+        counter: 0,
+        value: 10
     },
     getters: {
       doubleCounter: state => {
@@ -13,6 +14,9 @@ export const store = new Vuex.Store({
       },
       stringCounter: state => {
         return state.counter + ' clicks';
+      },
+      value: state => {
+        return state.value
       }
     },
     // Mutations must be synchronus! Can't have async code inside, because else can't track which mutation was responsible for each change in the mutation
@@ -22,10 +26,14 @@ export const store = new Vuex.Store({
       },
       decrement: (state, payload) => {
         state.counter -= payload;
+      },
+      updateValue: (state, payload) => {
+        state.value = payload;
       }
     },
     actions: {
       increment: (context, payload) => {
+        // pass the name of the mutation you want to execute
         context.commit('increment', payload.by);
       },
       decrement: (context, payload) => {
@@ -40,6 +48,9 @@ export const store = new Vuex.Store({
         setTimeout(() => {
           context.commit('decrement', payload.by);
         }, payload.duration);
+      },
+      updateValue: (context, payload) => {
+        context.commit('updateValue', payload);
       }
     }
 });
